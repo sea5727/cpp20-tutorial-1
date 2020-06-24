@@ -23,12 +23,12 @@ int main() {
     boost::asio::deadline_timer timer3(service, boost::posix_time::seconds(6));
 
     timer1.async_wait(
-        strand.wrap([](auto ... vn){ timer_expired("timer1");})
+        strand.wrap([](const boost::system::error_code& err/*e*/){ timer_expired("timer1");})
     );
     timer2.async_wait(
-        strand.wrap([](auto ... vn){ timer_expired("timer2");})
+        strand.wrap([](const boost::system::error_code& err/*e*/){ timer_expired("timer2");})
     );
-    timer3.async_wait([](auto ... vn){ timer_expired("timer3");});
+    timer3.async_wait([](const boost::system::error_code& err/*e*/){ timer_expired("timer3");});
 
     std::thread ta([&]() {service.run();});
     std::thread tb([&]() {service.run();});

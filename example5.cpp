@@ -17,14 +17,26 @@ void timer_expired(std::string id){
 int main() {
     boost::asio::io_service service;
 
-    service.post([] { std::cout << "eat\n"; });
+    service.post([] { std::cout << "eat1.. " << std::this_thread::get_id() << std::endl;});
+    service.post([] { std::cout << "eat2.. " << std::this_thread::get_id() << std::endl;});
+    service.post([] { std::cout << "eat3.. " << std::this_thread::get_id() << std::endl;});
+    service.post([] { std::cout << "eat4.. " << std::this_thread::get_id() << std::endl;});
+    service.post([] { std::cout << "eat5.. " << std::this_thread::get_id() << std::endl;});
     service.post([] { std::cout << "drink\n"; });
     service.post([] { std::cout << "and be merry!\n"; });
 
     std::cout << "thraed butler start\n";
-    std::thread butler([&]{ service.run();});
+    std::thread butler([&]{ 
+        std::cout << "buttler 1 start" << std::endl;
+        service.run();
+    });
+    std::thread butler2([&]{ 
+        std::cout << "buttler 2 start" << std::endl;
+        service.run();
+        });
     std::cout << "thraed butler join\n";
     butler.join();
+    butler2.join();
 
     std::cout << "done.\n";
 }

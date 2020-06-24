@@ -20,8 +20,8 @@ int main() {
     boost::asio::deadline_timer timer1(service, boost::posix_time::seconds(5));
     boost::asio::deadline_timer timer2(service, boost::posix_time::seconds(5));
 
-    timer1.async_wait([] ( auto ... vn) { timer_expired("timer1");});
-    timer2.async_wait([] ( auto ... vn) { timer_expired("timer2");});
+    timer1.async_wait([] (const boost::system::error_code& err/*e*/){ timer_expired("timer1");});
+    timer2.async_wait([] (const boost::system::error_code& err/*e*/) { timer_expired("timer2");});
 
     std::thread butler( [&]() {service.run();});
     butler.join();

@@ -14,7 +14,7 @@ int main() {
     boost::asio::deadline_timer timer(service, boost::posix_time::seconds(5));
 
     
-    timer.async_wait([](auto ... vn){
+    timer.async_wait([](const boost::system::error_code& err/*e*/){
         std::cout << boost::chrono::system_clock::now()
                   << " : timer expired\n";
 

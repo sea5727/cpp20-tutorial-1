@@ -35,7 +35,7 @@ public:
 
         std::cout << "start server .. listen.." << std::endl;
         acceptor_.async_accept( handler->socket() 
-                               , [=] (auto ec) {
+                               , [=] (boost::system::error_code ec) {
                                    handle_new_connection(handler, ec);
                                });
         std::cout << "start server .. emplace_back.." << std::endl;
@@ -55,7 +55,7 @@ private:
             = std::make_shared<ConnectionHandler> (io_service_);
 
         acceptor_.async_accept( new_handler->socket()
-                                , [=](auto ec) {
+                                , [=](boost::system::error_code ec) {
                                     handle_new_connection( new_handler, ec);
                                 });
     }
